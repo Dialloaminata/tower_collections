@@ -1,0 +1,16 @@
+---
+ - hosts: forti
+   gather_facts: no
+   connection: local
+   tasks:
+     - name: Backup current config
+       fortios_config:
+        host: "{{ inventory_hostname }}"
+        username: ansible
+        password: Ansible123
+        backup: yes
+        backup_path: /root/backup/forti/
+
+         
+
+         

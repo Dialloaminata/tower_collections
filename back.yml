@@ -1,0 +1,24 @@
+
+- hosts: forti
+  connection: httpapi
+  collections:
+  - fortinet.fortios
+  vars:
+   vdom: "root"
+   ansible_httpapi_use_ssl: yes
+   ansible_httpapi_validate_certs: no
+   ansible_httpapi_port: 443
+  tasks:
+   - name: Configure global attributes.
+     fortios_monitor_fact:
+       selector: 'system_config_backup'
+       vdom: 'root'
+       params:
+          scope: 'global'
+     register: backupinfo
+
+   - name: Save the backup information.
+     copy:
+       content: '{{ backupinfo.meta.raw }}'
+       dest: './local.backup'
+
